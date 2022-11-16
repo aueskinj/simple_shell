@@ -1,29 +1,40 @@
-#include "shell.h"
+#include "main.h"
 /**
- * main - the shell program start point
- * @ac: int num of command line args
- * @av: null term'd arr of strs contain args
- * @ev: null term'd arr of strs contain env vars
- * Return: int result. 0 in success, everything else is an error
+ * main - runs the shell program
+ *
+ * Return: 0 on success
  */
-int main(int ac, char **av, char **ev)
+int main(void)
 {
-	sev_t sev;
-	int exitcode = 0;
-	(void)ac;
-	init_shell_env(&sev, av, ev);
+    char *fullpathbuffer = NULL, *copy = NULL, *buffer = NULL;
+    char *PATH = NULL;
+    char **av;
+    int exitstatus = 0;
 
-	while (sev.skywalker)
-	{
-		dis_prompt(sev);
-		getcom(&sev);
-		checker_alias(&sev);
-		if (!check_builtin(&sev))
-			actions(&sev);
-		dis_error(&sev);
-	}
-	write_log(&sev);
-	exitcode = sev.error;
-	cl_sev(&sev);
-	return (exitcode);
+    signal(SIGINT, SIG_IGN);
+    PATH = _getenv("PATH");
+    if (PATH == NULL)
+        return (-1);
+    while (1)
+    {
+        av = NULL;
+        prompt();
+        buffer = _read();
+        if (*buffer != '\0')
+        {
+            av = tokenize(buffer);
+            if (av == NULL)
+            {
+                free(buffer);
+                continue;
+            }
+            fullpathbuffer = _fullpathbuffer(av, PATH, copy);
+            if (checkbuiltins(av, buffer, exitstatus) == 1)
+                continue;
+            exitstatus = _forkprocess(av, buffer, fullpathbuffer);
+        }
+        else
+            free(buffer);
+    }
+    return (0);
 }

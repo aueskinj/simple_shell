@@ -1,80 +1,45 @@
-.\" Manpage for Simple Shell.
-.\" Contact Mohamed Mehdi Bouchoucha mehdiboch@gmail.com to correct errors or typos.
-.TH "MANDALORIAN Simple Shell" 1 "27 November 2019" "1.0" "MANDALORIAN Simple Shell man page"
-
+.TH simple_shell "1.0" "5 MAy 2022" "simple_shell man page" "simple_shell man page"
 .SH NAME
-hsh - Mandalorian Simple Shell
-
+.B shell
+- a standard command interpreter similar to the GNU Bourne-Again SHell (sh).
 .SH SYNOPSIS
-hsh (does not support arguments)
-
+#include "holberton.h"
+.PP
+.shell
+.PP
+shell [option_name] [argument ...]
 .SH DESCRIPTION
-Welcome to the Mandalorian Simple Shell project! This program is a simple shell that can be compiled and launched from the command line within any number of Linux versions.
+shell is a command programming language that executes commands read from a terminal or a file. It is the program that is running when a user logs into the system.
+.SH INVOCATION
+If no arguments are present and if the standard input of the shell is connected to a terminal, the shell is considered an interactive shell.
+.PP
+If the standard input is used with a pipeline operator, |, to connect the command, such as echo "qwerty" | ./shell, then the shell is in non-interactive mode.
+.SH LEXICAL STRUCTURE
+The shell reads input in terms of lines from a file and breaks it up into words at whitespace (blanks and tabs).
+.SH RETURN
+Upon successful return, the shell will always return a 0 for success. If the shell program fails when a command is entered incorrectly or does not exist in the $PATH, then shell program will exit out of the child process and display an error message corresponding to the error the user committed and return with a prompt.
+.SH BUILT-INS
+.PP
+env - When entered, shell prints the current environment to standard output.
+.PP
+exit - When entered, shell exits out of the shell program.
 
-.SH OVERVIEW
-The Mandalorian Simple Shell project is a major team project conducted by Mohamed Mehdi Bouchoucha and Sami Lafine, students at Holberton School.
-
-.SH RETURN VALUE
-The shell returns the error code given by the last completed command followed by either ctrl-d or exit with no status code.
-
-.SH SYNTAX
-MANDALORIAN$ <command> <flags or options> <argument 1> <argument 2> ...
-
-$ <command> | ./hsh
-.SS
-
-.SS
-EXAMPLE 1:
-MANDALORIAN$ /bin/ls
-.SS
-EXAMPLE 2:
-MANDALORIAN$ ls -l
-.SS
-EXAMPLE 3:
-MANDALORIAN$ cat textfile
-.SS
-
-
-.SS
-EXAMPLE 4:
-$ echo "ls -l" | ./hsh
-
-.SH BUILTIN COMMANDS
-.SS alias
-- create or list an alias
-
-.SS cd
-- change directory
-
-.SS env
-- list the current environment variable
-
-.SS exit
-- exit from shell
-
-.SS help
-- display help for a builtin command
-
-.SS history
-- display the command history for the current shell session
-
-.SS setenv
-- set and environment variable
-
-.SS unsetenv
-- unset an environment variable
-
-.SH SEE ALSO
-DASH(1)
-
+.SH FILES
+.I
+.sp
+$HOME/.profile
+.I
+.sp
+/etc/profile
+.I
+.sp
+/etc/shells
+.SH ALSO SEE
+.PP
+man sh, execve(2), environ
+.SH NOTES
+All files and code used in .shell were created and compiled on Ubuntu 14.04.4 LTS using GCC 4.8.4
 .SH BUGS
-No known bugs
-
-.SH AUTHORS
-Mohamed Mehdi Bouchoucha
-    mohamed-mehdi.bouchoucha@holbertonschool.com
-        https://github.com/mmbouchoucha
-
-	Sami Lafine
-	    sami.lafine@holbertonschool.com
-	        https://github.com/afinesami
+There are many features and builtin commands that are not implimented in this simple shell such as aliases, cd, and logical operators. When 
+.SH AUTHOR
+Em432 & Joshman00
